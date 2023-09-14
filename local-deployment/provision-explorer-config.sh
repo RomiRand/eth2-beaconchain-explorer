@@ -14,6 +14,8 @@ echo "Postgres port is $POSTGRES_PORT"
 LBT_PORT=$(kurtosis enclave inspect my-testnet | grep 9000/tcp | tr -s ' ' | cut -d " " -f 6 | sed -e 's/tcp\:\/\/127.0.0.1\://' | tail -n 1)
 echo "Little bigtable port is $LBT_PORT"
 
+export $(cat .env | xargs)
+
 touch config.yml
 
 cat >config.yml <<EOL
@@ -83,6 +85,8 @@ indexer:
     port: '$CL_PORT'
     type: lighthouse
   eth1DepositContractFirstBlock: 0
+  ensTransformer:
+    validRegistrarContracts: ['$ENS_VALID_REGISTRAR_CONTRACTS']
 EOL
 
 echo "generated config written to config.yml"
