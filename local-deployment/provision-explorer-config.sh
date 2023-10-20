@@ -6,11 +6,14 @@ while getopts "c:" flag; do
     esac
 done
 
-CL_PORT=$(kurtosis port print my-testnet cl-1-lighthouse-geth http --format number)
+CL_PORT=$(kurtosis port print my-testnet cl-1-lighthouse-erigon http --format number)
 echo "CL Node port is $CL_PORT"
 
-EL_PORT=$(kurtosis port print my-testnet el-1-geth-lighthouse rpc --format number)
-echo "EL Node port is $EL_PORT"
+GETH_PORT=$(kurtosis port print my-testnet el-2-geth-lighthouse rpc --format number)
+echo "GETH Node port is $GETH_PORT"
+
+ERIGON_PORT=$(kurtosis port print my-testnet el-1-erigon-lighthouse ws-rpc --format number)
+echo "ERIGON Node port is $ERIGON_PORT"
 
 REDIS_PORT=$(kurtosis port print my-testnet redis redis --format number)
 echo "Redis port is $REDIS_PORT"
@@ -20,6 +23,9 @@ echo "Postgres port is $POSTGRES_PORT"
 
 LBT_PORT=$(kurtosis port print my-testnet littlebigtable littlebigtable --format number)
 echo "Little bigtable port is $LBT_PORT"
+# Use this to run lbt outside of docker (allows you to connect database tools like dbeaver to lbt's sqlite3 database and inspect saved keys)
+# LBT_PORT=45123
+# docker run -id --network=kt-my-testnet -p $LBT_PORT:9000/tcp --name littlebigtable -v $PWD/.vscode:/app/data gobitfly/little_bigtable:latest /app/little_bigtable -db-file /app/data/bigtable.db -host 0.0.0.0
 
 touch ${config}
 
@@ -43,8 +49,8 @@ bigtable:
   instance: explorer
   emulator: true
   emulatorPort: $LBT_PORT
-eth1ErigonEndpoint: 'http://127.0.0.1:$EL_PORT'
-eth1GethEndpoint: 'http://127.0.0.1:$EL_PORT'
+eth1ErigonEndpoint: 'http://127.0.0.1:$GETH_PORT'
+eth1GethEndpoint: 'http://127.0.0.1:$GETH_PORT'
 redisCacheEndpoint: '127.0.0.1:$REDIS_PORT'
 tieredCacheProvider: 'redis'
 frontend:

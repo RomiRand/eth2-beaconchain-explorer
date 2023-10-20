@@ -1,4 +1,4 @@
-parse_input = import_module("github.com/kurtosis-tech/ethereum-package/src/package_io/parse_input.star")
+parse_input = import_module("github.com/kurtosis-tech/ethereum-package/src/package_io/input_parser.star")
 eth_network_module = import_module("github.com/kurtosis-tech/ethereum-package/main.star")
 transaction_spammer = import_module("github.com/kurtosis-tech/ethereum-package/src/transaction_spammer/transaction_spammer.star")
 blob_spammer = import_module("github.com/kurtosis-tech/ethereum-package/src/blob_spammer/blob_spammer.star")
