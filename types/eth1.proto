@@ -78,6 +78,10 @@ message Eth1Transaction {
     uint64 blob_gas_used = 28;
 }
 
+message IsContractUpdate {
+    bool is_contract = 1;
+}
+
 message AccessList {
     bytes address = 1;
     repeated bytes storage_keys = 2;
@@ -161,6 +165,7 @@ message Eth1TransactionIndexed {
     bytes tx_fee = 8;
     bytes gas_price = 9;
     bool is_contract_creation = 10;
+    // unused, should mark reserved!
     bool invokes_contract = 11;
     string error_msg = 12;
 
@@ -191,6 +196,7 @@ message Eth1BlobTransactionIndexed {
     bytes gas_price = 8;
     bytes blob_tx_fee = 9;
     bytes blob_gas_price = 10;
+    // unused, should mark reserved!
     bool invokes_contract = 11;
     string error_msg = 12;
     repeated bytes blob_versioned_hashes = 13;
